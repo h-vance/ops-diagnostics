@@ -18,7 +18,6 @@ import json
 import re
 import argparse
 from collections import Counter
-from typing import Dict, List, Tuple
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Diagnostic log analyzer for SaaS support triage.")
@@ -103,13 +102,13 @@ def analyze_nginx_logs(filepath: str, limit: int) -> None:
 
 def print_report(total: int, parsed: int, statuses: Counter, errors: Counter, ips: Counter, limit: int) -> None:
     print(f"\n{'='*50}")
-    print(f"Log Analysis Report")
+    print("Log Analysis Report")
     print(f"{'='*50}")
     print(f"Total lines processed: {total}")
     print(f"Successfully parsed:   {parsed}")
     print(f"Parse rate:            {(parsed/total*100) if total > 0 else 0:.1f}%\n")
 
-    print(f"--- HTTP Status Code Breakdown ---")
+    print("--- HTTP Status Code Breakdown ---")
     for status, count in statuses.most_common():
         print(f"HTTP {status}: {count} requests")
         

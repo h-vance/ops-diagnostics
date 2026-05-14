@@ -19,24 +19,28 @@
 ## Core Modules
 
 ### `network/` — Connectivity & Certificate Diagnostics
+
 | Script | Purpose |
-|--------|---------|
+| ------ | ------- |
 | [`check_api_health.sh`](network/check_api_health.sh) | Hit a target endpoint and extract HTTP status, total response time, DNS lookup, TLS handshake, and payload size — structured as JSON for ticket evidence |
 | [`ssl_cert_check.sh`](network/ssl_cert_check.sh) | Verify SSL/TLS certificate validity and calculate days-to-expiration with color-coded severity (OK / WARNING / CRITICAL) |
 
 ### `logs/` — Log Analysis & Error Profiling
+
 | Script | Purpose |
-|--------|---------|
+| ------ | ------- |
 | [`log_analyzer.py`](logs/log_analyzer.py) | Parse structured (JSON) or standard Nginx access logs to aggregate HTTP status codes, identify high-frequency error endpoints, and profile top client IPs |
 
 ### `system/` — Resource Snapshot During Incidents
+
 | Script | Purpose |
-|--------|---------|
+| ------ | ------- |
 | [`sys_health_dump.sh`](system/sys_health_dump.sh) | Capture a point-in-time snapshot of CPU, memory, disk, top processes, network connections, and kernel messages — designed to preserve transient state during active incidents |
 
 ### `db/` — Database Connectivity & Latency Baseline
+
 | Script | Purpose |
-|--------|---------|
+| ------ | ------- |
 | [`db_latency_tester.py`](db/db_latency_tester.py) | Measure database connection time and simple query latency across multiple iterations with min/max/avg/median statistics — isolates DB load from application logic |
 
 ---
@@ -57,7 +61,8 @@ python3 logs/log_analyzer.py /var/log/nginx/access.log --format nginx --limit 15
 ./system/sys_health_dump.sh
 
 # DB Latency — baseline query performance from the app tier
-python3 db/db_latency_tester.py --dsn "postgres://user:pass@host:5432/db" --iterations 10
+python3 db/db_latency_tester.py \
+  --dsn "postgres://user:pass@host:5432/db" --iterations 10
 ```
 
 ## Prerequisites
@@ -76,10 +81,10 @@ All scripts are **read-only diagnostic operations**. They do not modify system s
 ## Related Repositories
 
 | Repository | Description |
-|------------|-------------|
+| ---------- | ----------- |
 | [**log-rotation-maintenance**](https://github.com/h-vance/log-rotation-maintenance) | Automated Bash scripts for log rotation, compression, and storage cleanup on Linux servers |
 | [**cloud-operations-runbook**](https://github.com/h-vance/cloud-operations-runbook) | 15+ standardized SOPs and runbooks covering compute, networking, identity, and application troubleshooting |
 
 ---
 
-*Maintained by a Technical Support Engineer focused on operational reliability and incident response.*
+Maintained by a Technical Support Engineer focused on operational reliability and incident response.

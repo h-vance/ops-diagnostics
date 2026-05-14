@@ -37,7 +37,7 @@ def parse_args():
 def test_connection_and_latency(dsn: str, query: str, iterations: int):
     latencies = []
     
-    print(f"Attempting to connect to database...")
+    print("Attempting to connect to database...")
     try:
         # Measure connection time
         conn_start = time.time()

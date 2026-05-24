@@ -2,7 +2,7 @@
 
 > **Diagnostic scripts built to accelerate incident triage and reduce Mean Time to Resolution (MTTR).**
 
-[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=Python&logoColor=FFFFFF)](https://python.org)&nbsp;[![GNU Bash](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=for-the-badge&logo=GNU+Bash&logoColor=FFFFFF)](https://www.gnu.org/software/bash/)&nbsp;[![Linux](https://img.shields.io/badge/Linux-222222?style=for-the-badge&logo=Linux&logoColor=FCC624)](https://kernel.org)
+[![Python](https://www.shieldcn.dev/badge/Python-3.8+-3776AB.svg?variant=default&logo=Python&logoColor=FFFFFF&size=xs)](https://python.org)&nbsp;[![GNU Bash](https://www.shieldcn.dev/badge/GNU%20Bash-4EAA25.svg?variant=default&logo=GNU+Bash&logoColor=FFFFFF&size=xs)](https://www.gnu.org/software/bash/)&nbsp;[![Linux](https://www.shieldcn.dev/badge/Linux-222222.svg?variant=default&logo=Linux&logoColor=FCC624&size=xs)](https://kernel.org)
 
 ---
 

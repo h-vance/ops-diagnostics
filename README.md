@@ -12,7 +12,7 @@
 
 **The Investigation:** During incident response, engineers were manually running ad-hoc `curl` commands, grepping unstructured logs, and SSHing into multiple hosts to check resource states — all before even confirming whether the reported service was actually degraded.
 
-**The Resolution:** Developed lightweight, zero-dependency diagnostic scripts to automatically ping endpoints, parse health status, profile system resources, and scan application logs for recurring error patterns. These tools reduced manual verification time from ~15 minutes to under 60 seconds and accelerated engineering escalations with structured, evidence-backed output.
+**The Resolution:** Developed lightweight diagnostic scripts to automatically ping endpoints, parse health status, profile system resources, and scan application logs for recurring error patterns. These tools reduced manual verification time from ~15 minutes to under 60 seconds and accelerated engineering escalations with structured, evidence-backed output.
 
 ---
 
@@ -22,8 +22,8 @@
 
 | Script | Purpose |
 | ------ | ------- |
-| [`check_api_health.sh`](network/check_api_health.sh) | Hit a target endpoint and extract HTTP status, total response time, DNS lookup, TLS handshake, and payload size — structured as JSON for ticket evidence |
-| [`ssl_cert_check.sh`](network/ssl_cert_check.sh) | Verify SSL/TLS certificate validity and calculate days-to-expiration with color-coded severity (OK / WARNING / CRITICAL) |
+| [`check_api_health.sh`](network/check_api_health.sh) | Hit a target endpoint and emit HTTP status, response timing, DNS, TLS, and payload size as curl JSON metrics |
+| [`ssl_cert_check.sh`](network/ssl_cert_check.sh) | Verify SSL/TLS certificate validity and warn when expiration is within 14 days |
 
 ### `logs/` — Log Analysis & Error Profiling
 
@@ -37,11 +37,13 @@
 | ------ | ------- |
 | [`sys_health_dump.sh`](system/sys_health_dump.sh) | Capture a point-in-time snapshot of CPU, memory, disk, top processes, network connections, and kernel messages — designed to preserve transient state during active incidents |
 
-### `db/` — Database Connectivity & Latency Baseline
+### Database Connectivity & Latency Baseline
 
-| Script | Purpose |
-| ------ | ------- |
-| [`db_latency_tester.py`](db/db_latency_tester.py) | Measure database connection time and simple query latency across multiple iterations with min/max/avg/median statistics — isolates DB load from application logic |
+Use the native database client from the app tier:
+
+```bash
+psql "$DATABASE_URL" -c "\\timing on" -c "SELECT 1"
+```
 
 ---
 
@@ -61,16 +63,15 @@ python3 logs/log_analyzer.py /var/log/nginx/access.log --format nginx --limit 15
 ./system/sys_health_dump.sh
 
 # DB Latency — baseline query performance from the app tier
-python3 db/db_latency_tester.py \
-  --dsn "postgres://user:pass@host:5432/db" --iterations 10
+psql "$DATABASE_URL" -c "\\timing on" -c "SELECT 1"
 ```
 
 ## Prerequisites
 
 - **OS:** Linux / macOS
 - **Bash:** 4.0+
-- **Python:** 3.8+ (standard library only — `psycopg2-binary` required for DB module)
-- **Optional:** `jq` for pretty-printed JSON output in health checks
+- **Python:** 3.8+ (standard library only)
+- **Optional:** `psql` for database latency checks
 
 ## Safety
 

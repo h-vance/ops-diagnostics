@@ -1,2 +1,0 @@
-# Database latency tester (db/db_latency_tester.py)
-psycopg2-binary>=2.9

@@ -6,9 +6,9 @@ import json
 import re
 import sys
 from collections import Counter
-from typing import Callable, Optional, Tuple
+from collections.abc import Callable
 
-LogParser = Callable[[str], Optional[Tuple[str, str, str]]]
+LogParser = Callable[[str], tuple[str, str, str] | None]
 NGINX_PATTERN = re.compile(
     r'(?P<ip>\S+) \S+ \S+ \[[^\]]+\] "\S+ (?P<path>\S+) \S+" (?P<status>\d{3}) \d+ ".*?" ".*?"'
 )
@@ -22,7 +22,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def parse_json_line(line: str) -> Optional[Tuple[str, str, str]]:
+def parse_json_line(line: str) -> tuple[str, str, str] | None:
     try:
         data = json.loads(line)
     except json.JSONDecodeError:
@@ -35,7 +35,7 @@ def parse_json_line(line: str) -> Optional[Tuple[str, str, str]]:
     )
 
 
-def parse_nginx_line(line: str) -> Optional[Tuple[str, str, str]]:
+def parse_nginx_line(line: str) -> tuple[str, str, str] | None:
     match = NGINX_PATTERN.match(line)
     if not match:
         return None

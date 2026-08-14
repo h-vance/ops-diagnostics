@@ -32,6 +32,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff
+          # Pinned: an unpinned linter means a new upstream release can
+          # turn this build red with no change to the code.
+          pip install 'ruff==0.16.3'
       - name: Run Ruff
         run: ruff check .
